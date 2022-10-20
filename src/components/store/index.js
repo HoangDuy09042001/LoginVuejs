@@ -12,10 +12,10 @@ export default new Vuex.Store({
 
     },
     mutations: {
-      changeStatus(state, newState){
+      changeStatus(state,newState){
         state.status = newState;
       },
-      changeInfor(state, newInfor){
+      changeInfor(state,newInfor){
         if(state.status==='success'){
            state.email = newInfor.email;
            state.password = newInfor.password;
@@ -41,6 +41,8 @@ export default new Vuex.Store({
                 context.commit('changeInfor', newInfor);
                 alert('You have successfully logged in');
                 console.log(result.data[0]);
+                console.log(newInfor)
+                console.log(this);
             }
             
         } catch (error) {
