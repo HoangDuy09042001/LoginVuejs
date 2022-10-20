@@ -17,7 +17,7 @@
                   type="email"
                   id="form1Example13"
                   class="form-control form-control-lg"
-                  v-model="email"
+                  v-model="info.email"
                 />
                 <label class="form-label" for="form1Example13"
                   >Email address</label
@@ -30,7 +30,7 @@
                   type="password"
                   id="form1Example23"
                   class="form-control form-control-lg"
-                  v-model="password"
+                  v-model="info.password"
                 />
                 <label class="form-label" for="form1Example23">Password</label>
               </div>
@@ -38,7 +38,7 @@
               
 
               <!-- Submit button -->
-              <button @click.prevent="login" type="submit" class="btn btn-primary btn-lg btn-block">
+              <button @click.prevent="sendRequest" type="submit" class="btn btn-primary btn-lg btn-block">
                 Sign in
               </button>
             </form>
@@ -49,33 +49,19 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: 'LoginForm',
   data(){
     return {
+      info: {
         email: '',
         password: '',
+      }
     }
   },
   methods: {
-    async login(){
-        //Email: Sincere@april.biz
-        //Password: Bret
-        let result = await axios.get(
-            `https://jsonplaceholder.typicode.com/users?email=${this.email}&username=${this.password}`
-        )
-        if(result.status == 200 && result.data.length >0){
-            localStorage.setItem("user-info", JSON.stringify(result.data[0]));
-            alert('You have successfully logged in');
-        }
-        console.log(result);
-    }
-  },
-  mounted(){
-    let user = localStorage.getItem('user-info');
-    if(user){
-        alert('Mounted');
+    sendRequest(){
+      this.$store.dispatch('handleRequest', this.info);
     }
   }
 }
